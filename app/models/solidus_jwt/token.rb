@@ -3,7 +3,6 @@
 module SolidusJwt
   class Token < BaseRecord
     attr_readonly :token
-    enum auth_type: { refresh_token: 0, access_token: 1 }
 
     # rubocop:disable Rails/ReflectionClassName
     belongs_to :user, class_name: ::Spree::UserClassHandle.new
@@ -16,7 +15,12 @@ module SolidusJwt
       )
     }
 
-    enum auth_type: { refresh: 0, access: 1 }
+    # Check Rails version and use appropriate syntax
+    if Rails.version.start_with?('8.')
+      enum :auth_type, { refresh: 0, access: 1 }
+    else
+      enum auth_type: { refresh: 0, access: 1 }
+    end
 
     validates :token, presence: true
 
