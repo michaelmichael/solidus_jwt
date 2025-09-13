@@ -5,8 +5,25 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 branch = ENV.fetch("SOLIDUS_BRANCH", "main")
 
+# solidus_frontend was extracted and has different versioning
+# Use v3.4 branch for solidus_frontend when using newer Solidus versions
+frontend_branch = case branch
+when "main", "current"
+  "v3.4"
+when /^v(\d+)\.(\d+)/
+  # Extract version numbers and compare
+  major, minor = $1.to_i, $2.to_i
+  if major > 3 || (major == 3 && minor > 4)
+    "v3.4"
+  else
+    branch
+  end
+else
+  branch
+end
+
 gem "solidus", github: "solidusio/solidus", branch: branch
-gem "solidus_frontend", github: "solidusio/solidus_frontend", branch: (branch > "v3.4") ? "v3.4" : branch
+gem "solidus_frontend", github: "solidusio/solidus_frontend", branch: frontend_branch
 
 # Needed to help Bundler figure out how to resolve dependencies,
 # otherwise it takes forever to resolve them.

@@ -47,11 +47,11 @@ workflows:
       - run-specs:
           name: *name
           matrix:
-            parameters: { solidus: ["current"], ruby: ["3.2"], db: ["mysql"] }
+            parameters: { solidus: ["main"], ruby: ["3.2"], db: ["mysql"] }
       - run-specs:
           name: *name
           matrix:
-            parameters: { solidus: ["older"], ruby: ["3.2"], db: ["sqlite"] }
+            parameters: { solidus: ["main"], ruby: ["3.2"], db: ["sqlite"] }
       - lint-code
 
   "Weekly run specs against main":
@@ -70,4 +70,4 @@ workflows:
       - run-specs:
           name: *name
           matrix:
-            parameters: { solidus: ["current"], ruby: ["3.2"], db: ["mysql"] }
+            parameters: { solidus: ["main"], ruby: ["3.2"], db: ["mysql"] }
