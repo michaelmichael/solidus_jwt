@@ -14,9 +14,9 @@ module Spree
         when Spree::User
           render json: token_response_json(result)
         when Hash
-          render status: :unauthorized, json: { error: I18n.t(result[:message], scope: 'devise.failure') }
+          render status: :unauthorized, json: {error: I18n.t(result[:message], scope: "devise.failure")}
         else
-          render status: :unauthorized, json: { error: I18n.t(:invalid_credentials, scope: 'solidus_jwt') }
+          render status: :unauthorized, json: {error: I18n.t(:invalid_credentials, scope: "solidus_jwt")}
         end
       end
 
@@ -26,7 +26,7 @@ module Spree
         expires_in = SolidusJwt::Config.jwt_expiration
 
         {
-          token_type: 'bearer',
+          token_type: "bearer",
           access_token: user.generate_jwt(expires_in: expires_in),
           expires_in: expires_in,
           refresh_token: generate_refresh_token_for(user)

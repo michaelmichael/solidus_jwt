@@ -5,7 +5,7 @@ module SolidusJwt
     module UserDecorator
       def self.prepended(base)
         base.extend ClassMethods
-        base.has_many :auth_tokens, class_name: 'SolidusJwt::Token'
+        base.has_many :auth_tokens, class_name: "SolidusJwt::Token"
       end
 
       module ClassMethods
@@ -35,7 +35,7 @@ module SolidusJwt
       def generate_jwt(expires_in: nil)
         SolidusJwt.encode(payload: as_jwt_payload, expires_in: expires_in)
       end
-      alias generate_jwt_token generate_jwt
+      alias_method :generate_jwt_token, :generate_jwt
 
       ##
       # Serializes user attributes to hash and applies
@@ -45,7 +45,7 @@ module SolidusJwt
       #
       def as_jwt_payload
         options = SolidusJwt::Config.jwt_options
-        claims = { sub: id }
+        claims = {sub: id}
 
         as_json(options)
           .merge(claims)

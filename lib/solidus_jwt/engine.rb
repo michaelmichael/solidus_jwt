@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core'
+require "spree/core"
 
 module SolidusJwt
   class Engine < Rails::Engine
@@ -8,7 +8,7 @@ module SolidusJwt
 
     isolate_namespace ::Spree
 
-    engine_name 'solidus_jwt'
+    engine_name "solidus_jwt"
 
     # use rspec for tests
     config.generators do |g|

@@ -6,16 +6,16 @@ module SolidusJwt
       class_option :auto_run_migrations, type: :boolean, default: false
 
       def add_migrations
-        run 'bundle exec rake railties:install:migrations FROM=solidus_jwt'
+        run "bundle exec rake railties:install:migrations FROM=solidus_jwt"
       end
 
       def run_migrations
         run_migrations = options[:auto_run_migrations] ||
-          ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]'))
+          ["", "y", "Y"].include?(ask("Would you like to run the migrations now? [Y/n]"))
         if run_migrations
-          run 'bundle exec rake db:migrate'
+          run "bundle exec rake db:migrate"
         else
-          puts 'Skipping rake db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
+          puts "Skipping rake db:migrate, don't forget to run it!" # rubocop:disable Rails/Output
         end
       end
     end

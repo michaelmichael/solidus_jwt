@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusJwt::DeviseStrategies::Password do
-  let(:request) { instance_double('ActionController::Request') }
+  let(:request) { instance_double("ActionController::Request") }
   let(:strategy) { described_class.new(nil, :spree_user) }
 
   let(:params) do
     {
       username: user.email,
-      password: 'secret',
-      grant_type: 'password'
+      password: "secret",
+      grant_type: "password"
     }
   end
 
   let(:headers) { {} }
-  let(:user) { FactoryBot.create(:user, password: 'secret') }
+  let(:user) { FactoryBot.create(:user, password: "secret") }
 
   before do
     allow(request).to receive(:headers).and_return(:headers)
@@ -24,48 +24,48 @@ RSpec.describe SolidusJwt::DeviseStrategies::Password do
     allow(strategy).to receive(:params).and_return(params)
   end
 
-  describe '#valid?' do
+  describe "#valid?" do
     subject { strategy.valid? }
 
     it { is_expected.to be true }
 
-    context 'when username is missing' do
+    context "when username is missing" do
       before { params.delete(:username) }
 
       it { is_expected.to be false }
     end
 
-    context 'when password is missing' do
+    context "when password is missing" do
       before { params.delete(:password) }
 
       it { is_expected.to be false }
     end
 
-    context 'when grant_type is not password' do
-      before { params[:grant_type] = 'invalid' }
+    context "when grant_type is not password" do
+      before { params[:grant_type] = "invalid" }
 
       it { is_expected.to be false }
     end
   end
 
-  describe '#authenticate!' do
+  describe "#authenticate!" do
     subject { strategy.authenticate! }
 
     it { is_expected.to be :success }
 
-    context 'when auth is invalid' do
+    context "when auth is invalid" do
       let(:params) do
         {
           username: user.email,
-          password: 'invalid',
-          grant_type: 'secret'
+          password: "invalid",
+          grant_type: "secret"
         }
       end
 
       it { is_expected.to be :failure }
     end
 
-    context 'when user is not valid for authentication' do
+    context "when user is not valid for authentication" do
       before do
         allow_any_instance_of(Spree::User).to receive(:valid_for_authentication?).and_return(false) # rubocop:disable RSpec/AnyInstance
       end

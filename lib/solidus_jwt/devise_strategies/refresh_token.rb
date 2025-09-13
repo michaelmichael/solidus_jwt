@@ -27,7 +27,7 @@ module SolidusJwt
       end
 
       def auth_hash
-        { auth_type: :refresh, token: refresh_token }
+        {auth_type: :refresh, token: refresh_token}
       end
 
       def refresh_token
@@ -35,7 +35,7 @@ module SolidusJwt
       end
 
       def valid_grant_type?
-        grant_type == 'refresh_token'
+        grant_type == "refresh_token"
       end
 
       def valid_params?

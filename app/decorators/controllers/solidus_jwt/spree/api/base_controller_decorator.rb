@@ -20,7 +20,7 @@ module SolidusJwt
 
           jwt = json_web_token
           if jwt.present?
-            user = ::Spree.user_class.for_jwt(jwt['sub'] || jwt['id'])
+            user = ::Spree.user_class.for_jwt(jwt["sub"] || jwt["id"])
             if user
               # Instead of setting @current_api_user directly, let's make the system
               # use the user's actual spree_api_key for authentication

@@ -21,7 +21,7 @@ module SolidusJwt
       end
 
       def auth_hash
-        { email: username }
+        {email: username}
       end
 
       def username
@@ -33,7 +33,7 @@ module SolidusJwt
       end
 
       def valid_grant_type?
-        grant_type == 'password'
+        grant_type == "password"
       end
 
       def valid_params?

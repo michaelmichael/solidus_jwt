@@ -30,7 +30,7 @@ module SolidusJwt
       # @see https://github.com/jwt/ruby-jwt#support-for-reserved-claim-names
       jwt_payload[:exp] ||= current_time + expires_in.to_i if expires_in.present?
       jwt_payload[:iat] ||= current_time
-      jwt_payload[:iss] ||= 'solidus'
+      jwt_payload[:iss] ||= "solidus"
 
       JWT.encode(jwt_payload, SolidusJwt::Config.jwt_secret,
         SolidusJwt::Config.jwt_algorithm)

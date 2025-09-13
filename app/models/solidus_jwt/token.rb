@@ -10,16 +10,16 @@ module SolidusJwt
 
     scope :non_expired, -> {
       where(
-        'solidus_jwt_tokens.created_at >= ?',
+        "solidus_jwt_tokens.created_at >= ?",
         SolidusJwt::Config.refresh_expiration.seconds.ago
       )
     }
 
     # Check Rails version and use appropriate syntax
-    if Rails.version.start_with?('8.')
-      enum :auth_type, { refresh: 0, access: 1 }
+    if Rails.version.start_with?("8.")
+      enum :auth_type, {refresh: 0, access: 1}
     else
-      enum auth_type: { refresh: 0, access: 1 }
+      enum auth_type: {refresh: 0, access: 1}
     end
 
     validates :token, presence: true
@@ -33,9 +33,9 @@ module SolidusJwt
     #
     def self.invalidate(user)
       # rubocop:disable Rails/SkipsModelValidations
-      non_expired.
-        where(user_id: user.to_param).
-        update_all(active: false)
+      non_expired
+        .where(user_id: user.to_param)
+        .update_all(active: false)
       # rubocop:enable Rails/SkipsModelValidations
     end
 

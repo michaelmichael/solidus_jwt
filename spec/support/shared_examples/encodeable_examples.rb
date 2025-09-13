@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'Encodeable Examples' do
-  describe 'encode' do
-    let(:payload) { { user_id: 1 } }
+RSpec.shared_examples "Encodeable Examples" do
+  describe "encode" do
+    let(:payload) { {user_id: 1} }
 
-    it 'encodes a json web token' do
+    it "encodes a json web token" do
       allow(JWT).to receive(:encode).and_call_original
 
       token = subject.encode(payload: payload)
 
       aggregate_failures do
-        expect(JWT).to have_received(:encode).with(hash_including('iat', 'user_id' => 1),
+        expect(JWT).to have_received(:encode).with(hash_including("iat", "user_id" => 1),
           SolidusJwt::Config.jwt_secret, SolidusJwt::Config.jwt_algorithm)
         expect(token).to be_kind_of String
       end
     end
 
-    context 'when expiration is passed in' do
-      it 'encodes a json web token with expiration date' do
+    context "when expiration is passed in" do
+      it "encodes a json web token with expiration date" do
         allow(JWT).to receive(:encode).and_call_original
 
         token = subject.encode(payload: payload, expires_in: 60)
 
         aggregate_failures do
-          expect(JWT).to have_received(:encode).with(hash_including('iat', 'exp', 'user_id' => 1),
+          expect(JWT).to have_received(:encode).with(hash_including("iat", "exp", "user_id" => 1),
             SolidusJwt::Config.jwt_secret, SolidusJwt::Config.jwt_algorithm)
           expect(token).to be_kind_of String
         end

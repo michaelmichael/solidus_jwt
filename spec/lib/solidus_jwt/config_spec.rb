@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusJwt::Config do
   it { is_expected.to be_kind_of SolidusJwt::Preferences }
